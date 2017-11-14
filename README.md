@@ -1,15 +1,16 @@
 # Instructions to start Spring Boot with jolokia agent
 
-When a Spring Boot application is deployed on Openshift using the openjdk java 1.8 S2I docker image, the jolokia agent is deployed and 
-bootstrapped using the java -javaagent parameter when the Spring Boot application is launched.
+When a Spring Boot application is deployed on Openshift using the openjdk java 1.8 S2I docker image, the jolokia agent is deployed within the image and, when the docker container
+is starter, then it is instrumented by the java -javaagent parameter.
+The HTTPS service exposed by Jolokia allows to access using the HTTP protocol the information about the MBeans created within the JVM. 
 
-## Locally
+## Run the project locally
 ```bash
 mvn clean package
 java -javaagent:jar/jolokia-jvm-1.3.7-agent.jar=config=etc/jolokia.properties -jar target/spring-boot-jolokia-1.0.0-SNAPSHOT.jar
 ```
 
-# Query the agent
+# Query the Jolokia Service
 
 ```bash
 curl -v -u jolokia:MYPASSWORD http://localhost:8778/jolokia/
