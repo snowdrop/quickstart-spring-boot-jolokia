@@ -3,7 +3,7 @@
 ## Locally
 ```bash
 mvn clean package
-java -javaagent:jar/jolokia-jvm-1.3.7-agent.jar=config=etc/jolokia.properties -jar target/spring-boot-jolokia-0.0.1-SNAPSHOT.jar
+java -javaagent:jar/jolokia-jvm-1.3.7-agent.jar=config=etc/jolokia.properties -jar target/spring-boot-jolokia-1.0.0-SNAPSHOT.jar
 ```
 
 # Query the agent
@@ -51,7 +51,7 @@ Transfer-encoding: chunked
     }
 }
 
-http http://localhost:8778/jolokia/read/java.lang:type\=Memory/HeapMemoryUsage
+http --auth jolokia:MYPASSWORD http://localhost:8778/jolokia/read/java.lang:type\=Memory/HeapMemoryUsage
 HTTP/1.1 200 OK
 Cache-control: no-cache
 Content-type: text/plain; charset=utf-8
@@ -77,13 +77,15 @@ Transfer-encoding: chunked
 }
 ```
 
+## Deploy on OpenShift
+
 ## Create Service/Route on Openshift
 
 ```bash
 oc delete route/spring-boot-http-jolokia
 oc delete svc/spring-boot-http-jolokia
-oc create -f src/fabric8/svc.yaml          
-oc create -f src/fabric8/route.yaml 
+oc create -f src/fabric8/jolokia-svc.yaml          
+oc create -f src/fabric8/jolokia-route.yaml 
 ```
 
 ## Access to jolokia
