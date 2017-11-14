@@ -13,18 +13,12 @@ java -javaagent:jar/jolokia-jvm-1.3.7-agent.jar=config=etc/jolokia.properties -j
 # Query the Jolokia Service
 
 ```bash
-curl -v -u jolokia:MYPASSWORD http://localhost:8778/jolokia/
+curl -v -u jolokia:admin123 http://localhost:8778/jolokia/
 
 or
 
-http --auth jolokia:MYPASSWORD http://localhost:8778/jolokia/version
-HTTP/1.1 200 OK
-Cache-control: no-cache
-Content-type: text/plain; charset=utf-8
-Date: Tue, 14 Nov 2017 11:40:57 GMT
-Expires: Tue, 14 Nov 2017 10:40:57 GMT
-Pragma: no-cache
-Transfer-encoding: chunked
+http --auth jolokia:admin123 http://localhost:8778/jolokia/version
+...
 
 {
     "request": {
@@ -55,14 +49,9 @@ Transfer-encoding: chunked
     }
 }
 
-http --auth jolokia:MYPASSWORD http://localhost:8778/jolokia/read/java.lang:type\=Memory/HeapMemoryUsage
+http --auth jolokia:admin123 http://localhost:8778/jolokia/read/java.lang:type\=Memory/HeapMemoryUsage
 HTTP/1.1 200 OK
-Cache-control: no-cache
-Content-type: text/plain; charset=utf-8
-Date: Tue, 14 Nov 2017 11:56:54 GMT
-Expires: Tue, 14 Nov 2017 10:56:54 GMT
-Pragma: no-cache
-Transfer-encoding: chunked
+...
 
 {
     "request": {
