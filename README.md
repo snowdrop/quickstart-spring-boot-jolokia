@@ -79,7 +79,14 @@ Transfer-encoding: chunked
 
 ## Deploy on OpenShift
 
-## Create Service/Route on Openshift
+```bash
+oc new-project demo-jolokia
+mvn clean package fabric8:deploy -Popenshift
+```
+
+## Install manually the Jolokia service/route
+
+- Create Service/Route on Openshift
 
 ```bash
 oc delete route/spring-boot-http-jolokia
@@ -88,7 +95,7 @@ oc create -f src/fabric8/jolokia-svc.yaml
 oc create -f src/fabric8/jolokia-route.yaml 
 ```
 
-## Access to jolokia
+- Access to jolokia
 
 ```bash
 export PASSWORD=r1pWReSZzGJka4Bs4VcsXs1ukmJyKz
