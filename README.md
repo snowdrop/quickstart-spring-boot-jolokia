@@ -12,6 +12,8 @@ java -javaagent:jar/jolokia-jvm-1.3.7-agent.jar=config=etc/jolokia.properties -j
 
 # Query the Jolokia Service
 
+- Get the Jolokia Info
+
 ```bash
 curl -v -u jolokia:admin123 http://localhost:8778/jolokia/
 
@@ -48,7 +50,9 @@ http --auth jolokia:admin123 http://localhost:8778/jolokia/version
         "protocol": "7.2"
     }
 }
-
+```
+- Get the Memory usage
+```bash
 http --auth jolokia:admin123 http://localhost:8778/jolokia/read/java.lang:type\=Memory/HeapMemoryUsage
 HTTP/1.1 200 OK
 ...
@@ -79,7 +83,7 @@ mvn clean package fabric8:deploy -Popenshift
 
 ## Access Jolokia Https Service
 
-Get the jolokia route endpoint and next issue a curl or httpie request
+- Get the jolokia route endpoint and next issue a curl or httpie request
 ```bash
 curl -k -u jolokia:admin123 https://spring-boot-http-jolokia-cmoulliard.ose.spring-boot.osepool.centralci.eng.rdu2.redhat.com/jolokia/version
 
