@@ -1,5 +1,8 @@
 # Instructions to start Spring Boot with jolokia agent
 
+When a Spring Boot application is deployed on Openshift using the openjdk java 1.8 S2I docker image, the jolokia agent is deployed and 
+bootstrapped using the java -javaagent parameter when the Spring Boot application is launched.
+
 ## Locally
 ```bash
 mvn clean package
@@ -84,6 +87,17 @@ oc new-project demo-jolokia
 mvn clean package fabric8:deploy -Popenshift
 ```
 
+## Access Jolokia Https Service
+
+Get the jolokia route endpoint and next issue a curl or httpie request
+```bash
+curl -k -u jolokia:admin123 https://spring-boot-http-jolokia-cmoulliard.ose.spring-boot.osepool.centralci.eng.rdu2.redhat.com/jolokia/version
+
+or
+
+http --verify=no --auth jolokia:admin123 https://spring-boot-http-jolokia-cmoulliard.ose.spring-boot.osepool.centralci.eng.rdu2.redhat.com/jolokia/version
+```
+
 ## Install manually the Jolokia service/route
 
 - Create Service/Route on Openshift
@@ -93,16 +107,5 @@ oc delete route/spring-boot-http-jolokia
 oc delete svc/spring-boot-http-jolokia
 oc create -f src/fabric8/jolokia-svc.yaml          
 oc create -f src/fabric8/jolokia-route.yaml 
-```
-
-- Access to jolokia
-
-```bash
-export PASSWORD=r1pWReSZzGJka4Bs4VcsXs1ukmJyKz
-curl -k -u jolokia:$PASSWORD https://spring-boot-http-jolokia-cmoulliard.ose.spring-boot.osepool.centralci.eng.rdu2.redhat.com/jolokia/version
-
-or
-
-http --verify=no --auth jolokia:$PASSWORD https://spring-boot-http-jolokia-cmoulliard.ose.spring-boot.osepool.centralci.eng.rdu2.redhat.com/jolokia/version
 ```
 
