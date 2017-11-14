@@ -1,16 +1,19 @@
 # Instructions to start Spring Boot with jolokia agent
 
+## Locally
+```bash
 mvn clean package
-java -javaagent:jar/jolokia-jvm-1.3.7-agent.jar=config=jolokia.properties -jar target/actuator-0.0.1-SNAPSHOT.jar
+java -javaagent:jar/jolokia-jvm-1.3.7-agent.jar=config=etc/jolokia.properties -jar target/spring-boot-jolokia-0.0.1-SNAPSHOT.jar
+```
 
 # Query the agent
 
 ```bash
-curl -v http://localhost:8778/jolokia/
+curl -v -u jolokia:MYPASSWORD http://localhost:8778/jolokia/
 
 or
 
-http http://localhost:8778/jolokia/
+http --auth jolokia:MYPASSWORD http://localhost:8778/jolokia/version
 HTTP/1.1 200 OK
 Cache-control: no-cache
 Content-type: text/plain; charset=utf-8
