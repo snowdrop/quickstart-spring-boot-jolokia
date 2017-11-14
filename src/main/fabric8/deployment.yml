@@ -3,7 +3,11 @@ spec:
     spec:
       containers:
       - env:
+        - name: AB_JOLOKIA_PORT
+          value: 8778
         - name: AB_JOLOKIA_USER
           value: "jolokia"
         - name: AB_JOLOKIA_PASSWORD
           value: "admin123"
+        - name: AB_JOLOKIA_PASSWORD_RANDOM
+          value: "false"

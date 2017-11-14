@@ -4,6 +4,14 @@ When a Spring Boot application is deployed on Openshift using the openjdk java 1
 is starter, then it is instrumented by the java -javaagent parameter.
 The HTTPS service exposed by Jolokia allows to access using the HTTP protocol the information about the MBeans created within the JVM. 
 
+The Jolokia service can be customized using the following parameters defined within the DeploymentConfig resource as env variables :
+
+- AB_JOLOKIA_USER = "jolokia"
+- AB_JOLOKIA_PASSWORD = "admin123"
+- AB_JOLOKIA_PASSWORD_RANDOM = "false"
+
+Remark : The list of the paramters available is defined [here](https://github.com/jboss-container-images/redhat-openjdk-18-openshift-image/blob/openjdk18-dev/image.yaml)
+
 ## Run the project locally
 ```bash
 mvn clean package
@@ -83,13 +91,18 @@ mvn clean package fabric8:deploy -Popenshift
 
 ## Access Jolokia Https Service
 
-- Get the jolokia route endpoint and next issue a curl or httpie request
+- Get the jolokia route endpoint 
 ```bash
-curl -k -u jolokia:admin123 https://spring-boot-http-jolokia-cmoulliard.ose.spring-boot.osepool.centralci.eng.rdu2.redhat.com/jolokia/version
+JOLOKIA_URL=oc get route spring-boot-monitoring-jolokia -o jsonpath='https://{.spec.host}'
+```
+
+- Next issue a curl or httpie request
+```bash
+curl -k -u jolokia:admin123 <ROUTE_ADDRESS>/jolokia/version
 
 or
 
-http --verify=no --auth jolokia:admin123 https://spring-boot-http-jolokia-cmoulliard.ose.spring-boot.osepool.centralci.eng.rdu2.redhat.com/jolokia/version
+http --verify=no --auth jolokia:admin123 <ROUTE_ADDRESS>/jolokia/version
 ```
 
 ## Install manually the Jolokia service/route
