@@ -93,16 +93,16 @@ mvn clean package fabric8:deploy -Popenshift
 
 - Get the jolokia route endpoint 
 ```bash
-JOLOKIA_URL=oc get route spring-boot-monitoring-jolokia -o jsonpath='https://{.spec.host}'
+JOLOKIA_URL=$(oc get route spring-boot-monitoring-jolokia -o jsonpath='https://{.spec.host}')
 ```
 
 - Next issue a curl or httpie request
 ```bash
-curl -k -u jolokia:admin123 <ROUTE_ADDRESS>/jolokia/version
+curl -k -u jolokia:admin123 $JOLOKIA_URL/jolokia/version
 
 or
 
-http --verify=no --auth jolokia:admin123 <ROUTE_ADDRESS>/jolokia/version
+http --verify=no --auth jolokia:admin123 $JOLOKIA_URL/jolokia/version
 ```
 
 ## Install manually the Jolokia service/route
